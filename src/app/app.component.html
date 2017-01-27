@@ -1,0 +1,21 @@
+<h1>
+  {{title}}
+</h1>
+
+  <div> auth.uid:{{ (af.auth | async)?.uid }} </div>
+  <button (click)="login()">Login</button>
+  <button (click)="logout()">Logout</button>
+
+<ul>
+  <li class="text" *ngFor="let dcs of devices_current_status | async">
+    {{dcs.$key}}
+    {{dcs.$value}}
+  </li>
+</ul>
+<br/>
+<h2>Settings:</h2>
+<ul>
+  <li class="text" *ngFor="let setting of settings | async">
+    {{setting.$key}}: {{setting.$value}}
+  </li>
+</ul>
