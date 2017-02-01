@@ -1,21 +1,56 @@
-<h1>
-  {{title}}
-</h1>
+<section [ngSwitch]="user != null">
+  <mdl-card *ngSwitchCase="false">
+    <mdl-card-title>{{title}}</mdl-card-title>
+    <mdl-button md-raised-button (click)="login()">Login</mdl-button>
+  </mdl-card>
 
-  <div> auth.uid:{{ (af.auth | async)?.uid }} </div>
-  <button (click)="login()">Login</button>
-  <button (click)="logout()">Logout</button>
+  <mdl-layout mdl-layout-fixed-header mdl-layout-fixed-drawer *ngSwitchCase="true">
+    <mdl-layout-header>
+      <mdl-layout-header-row>
+        <mdl-layout-title>{{title}}</mdl-layout-title>
+        <mdl-layout-spacer></mdl-layout-spacer>
+        <img [src]="user.photoURL">
+        <button mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
+        <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
+           <mdl-menu-item mdl-ripple (click)="action()">Settings</mdl-menu-item>
+           <mdl-menu-item mdl-ripple (click)="logout()">Logout</mdl-menu-item>
+        </mdl-menu>
+      </mdl-layout-header-row>
+    </mdl-layout-header>
 
-<ul>
-  <li class="text" *ngFor="let dcs of devices_current_status | async">
-    {{dcs.$key}}
-    {{dcs.$value}}
-  </li>
-</ul>
-<br/>
-<h2>Settings:</h2>
-<ul>
-  <li class="text" *ngFor="let setting of settings | async">
-    {{setting.$key}}: {{setting.$value}}
-  </li>
-</ul>
+    <mdl-layout-drawer>
+      <mdl-layout-title>Menu</mdl-layout-title>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" >Link</a>
+        <a class="mdl-navigation__link" >Link</a>
+        <a class="mdl-navigation__link" >Link</a>
+      </nav>
+    </mdl-layout-drawer>
+
+    <mdl-layout-content>
+      <ul>
+        <li class="text" *ngFor="let dcs of devices_current_status | async">
+          {{dcs.$key}}
+          {{dcs.$value}}
+        </li>
+      </ul>
+      <br/>
+      <h2>Settings:</h2>
+      <ul>
+        <li class="text" *ngFor="let setting of settings | async">
+          {{setting.$key}}: {{setting.$value}}
+        </li>
+      </ul>
+
+
+
+    </mdl-layout-content>
+  </mdl-layout>
+
+</section>
+
+
+
+
+
+
