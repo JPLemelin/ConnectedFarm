@@ -2,10 +2,12 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
 
+## TODO
+ - travis e2e https://medium.com/from-the-couch/angular-2-with-travis-ci-922040e01937#.4839ifx1q
+
 ## Build & deploy to Firebase
 
-  ng build -pro
-  firebase deploy
+Run `ng build -pro` to build and `firebase deploy` to deploy
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

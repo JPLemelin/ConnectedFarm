@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { AngularFireModule, AuthProviders, AuthMethods  } from 'angularfire2';
+import { MdlModule } from 'angular2-mdl';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCFQrOJFNk_GLqClFLoaSpTYOylrUqY0Ec",
@@ -27,7 +28,8 @@ const firebaseAuthConfig = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+    MdlModule,  // See: http://mseemann.io/angular2-mdl/card
   ],
   providers: [],
   bootstrap: [AppComponent]
