@@ -9,11 +9,19 @@
       <mdl-layout-header-row>
         <mdl-layout-title>{{title}}</mdl-layout-title>
         <mdl-layout-spacer></mdl-layout-spacer>
-        <img [src]="user.photoURL">
-        <button mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple><mdl-icon>more_vert</mdl-icon></button>
+        <img [src]="user.photoURL" class="header-avatar">
+        <mdl-button #btn1="mdlButton" (click)="m1.toggle($event, btn1)" mdl-button-type="icon" mdl-ripple>
+          <mdl-icon>more_vert</mdl-icon>
+        </mdl-button>
         <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
-           <mdl-menu-item mdl-ripple (click)="action()">Settings</mdl-menu-item>
-           <mdl-menu-item mdl-ripple (click)="logout()">Logout</mdl-menu-item>
+           <mdl-menu-item (click)="action()">
+             <mdl-icon>settings</mdl-icon>
+             <span>Settings</span>
+           </mdl-menu-item>
+           <mdl-menu-item (click)="logout()">
+             <mdl-icon>exit_to_app</mdl-icon>
+             <span>Logout</span>
+           </mdl-menu-item>
         </mdl-menu>
       </mdl-layout-header-row>
     </mdl-layout-header>
@@ -21,13 +29,119 @@
     <mdl-layout-drawer>
       <mdl-layout-title>Menu</mdl-layout-title>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" >Link</a>
-        <a class="mdl-navigation__link" >Link</a>
-        <a class="mdl-navigation__link" >Link</a>
+        <a class="mdl-navigation__link" ><mdl-icon>dashboard</mdl-icon>Dashboard</a>
+        <a class="mdl-navigation__link" ><mdl-icon>settings</mdl-icon>Settings</a>
+        <mdl-layout-spacer></mdl-layout-spacer>
+        <a class="mdl-navigation__link" href=""><mdl-icon>help_outline</mdl-icon></a>
       </nav>
     </mdl-layout-drawer>
 
     <mdl-layout-content>
+      <div class="mdl-grid">
+
+        <!-- Temperature -->
+        <mdl-card class="mdl-cell mdl-cell--6-col temperature-card"  mdl-shadow="2">
+          <mdl-card-title mdl-card-border>
+            <h2 mdl-card-title-text>Temperature</h2>
+            <mdl-layout-spacer></mdl-layout-spacer>
+            <div class="mdl-card__subtitle-text">
+              <mdl-icon>room</mdl-icon>
+              INDOOR
+            </div>
+          </mdl-card-title>
+          <mdl-card-supporting-text>
+            <p class="temperature-text">18.5<sup>°</sup> <mdl-icon>trending_up</mdl-icon></p>
+            <p class="temperature-description">time-stamp here</p>
+          </mdl-card-supporting-text>
+          <mdl-card-actions mdl-card-border>
+            Set Point: 20.2°
+            <mdl-layout-spacer></mdl-layout-spacer> <!-- FIXME: Spacer doesn't work :/ -->
+            <!--<div class="mdl-layout-spacer"></div>-->
+            <mdl-button mdl-colored (click)="editSetPoint()">
+              <mdl-icon>edit</mdl-icon>
+            </mdl-button>
+          </mdl-card-actions>
+        </mdl-card>
+
+        <mdl-card class="mdl-cell mdl-cell--6-col temperature-card"  mdl-shadow="2">
+          <mdl-card-title mdl-card-border>
+            <h2 mdl-card-title-text>Temperature</h2>
+            <mdl-layout-spacer></mdl-layout-spacer>
+            <div class="mdl-card__subtitle-text">
+              <mdl-icon>room</mdl-icon>
+              OUTDOOR
+            </div>
+          </mdl-card-title>
+          <mdl-card-supporting-text>
+            <p class="temperature-text">-16.5<sup>°</sup> <mdl-icon>trending_down</mdl-icon></p>
+            <p class="temperature-description">time-stamp here</p>
+          </mdl-card-supporting-text>
+        </mdl-card>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Fan</th>
+              <th>Manual</th>
+              <th>Current State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Fan 1</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch></mdl-switch></td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Fan 2</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Fan Variable</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox [(ngModel)]="fan_3_auto"></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric">
+                <div style="width: 300px">
+                  <mdl-slider min="0" max="50" value="30" step="5" disabled=[fan_3_auto]></mdl-slider>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Fan</th>
+              <th>Manual</th>
+              <th>Current State</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Light 1</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch></mdl-switch></td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Light 2</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Light 3</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
+            </tr>
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">Light 4</td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
+              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <ul>
         <li class="text" *ngFor="let dcs of devices_current_status | async">
           {{dcs.$key}}

@@ -2,3 +2,61 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
+
+mdl-menu-item {
+  display: flex;
+  align-items: center;
+}
+
+.header-avatar {
+  border-radius: 100%;
+}
+
+.mdl-navigation__link .material-icons {
+    font-size: 24px;
+    /*color: rgba(255, 255, 255, 0.56);*/
+    margin-right: 12px;
+}
+
+.mdl-menu__item .material-icons {
+    font-size: 24px;
+    margin-right: 12px;
+}
+
+.temperature-card {
+  /*min-width: 350px;*/
+}
+
+.temperature-card .mdl-card__supporting-text {
+  /*color: rgba(255,255,255,.8);*/
+  background-size: cover;
+  text-align: right;
+  padding-top: 38px;
+  /*text-shadow: 4px 4px 4px rgba(0,0,0,.4)*/
+}
+
+.temperature-card .mdl-card__supporting-text .temperature-text {
+  /*font-family: Roboto,Helvetica,Arial,sans-serif;*/
+  font-size: 100px;
+  line-height: 1;
+}
+
+.temperature-card .mdl-card__supporting-text .temperature-text sup {
+  position: relative;
+  margin-bottom: 0px;
+  top: 13px
+}
+.temperature-card .mdl-card__supporting-text .temperature-description {
+  /*font-size: 12px;*/
+  position: relative;
+  margin-bottom: 0px;
+}
+
+.trending__arrow-up {
+    color: #00bcd4
+}
+
+.trending__arrow-down {
+    color: #ff5252
+}
+
