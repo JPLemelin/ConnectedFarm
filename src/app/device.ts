@@ -1,4 +1,3 @@
-// import {FirebaseRef}  from 'angularfire2';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
 // interface Device {
@@ -66,15 +65,15 @@ export class Fan {
   deviceType = DeviceType;
 
   isAutoMode: boolean;
-  value: boolean | number;
+  _value: boolean | number;
 
   private _deviceType: DeviceType;
   private _mode: FirebaseObjectObservable<any>;
-  private _value: FirebaseObjectObservable<any>;
+  private _fb_value: FirebaseObjectObservable<any>;
 
   constructor(af: AngularFire, public name: string, device_type: string, device_id: string){
     this._mode = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'mode');
-    this._value = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'value');
+    this._fb_value = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'value');
 
     // TODO: Refactor
     if (device_type == "relays") {
@@ -92,11 +91,13 @@ export class Fan {
       this.isAutoMode = snapshot.$value == "auto"
     });
 
-    this._value.subscribe(snapshot => {
-      this.value = snapshot.$value
+    this._fb_value.subscribe(snapshot => {
+      this._value = snapshot.$value
     });
   }
 
+
+  // TODO: use get set with ([ngModel]) http://stackoverflow.com/questions/12827266/get-and-set-in-typescript
   setMode(is_auto: boolean) {
     if (is_auto) {
       this._mode.set("auto");
@@ -114,6 +115,20 @@ export class Fan {
       // Should not happened!
     }
   }
+
+  set value(value: boolean | number) {
+    console.log(this);
+    if (this.isAutoMode == false) {
+      this._mode.set(value);
+    }
+    else {
+      // Should not happened!
+    }
+  }
+  get value(): boolean | number {
+    return this._value;
+  }
+
 
   getDeviceType(): DeviceType {
     return this._deviceType;

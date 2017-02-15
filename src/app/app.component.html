@@ -79,9 +79,12 @@
         </mdl-card>
 
 
-        <div *ngFor="let fan of fans | mapToListOfValue">
-           <fan [fan]="fan"></fan>
-        </div>
+        <table table-fans [fans]="fans" [deviceCategory]="'Fan'" class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp" >
+        </table>
+
+        <!--<div *ngFor="let fan of fans | mapToListOfValue">-->
+           <!--<fan [fan]="fan"></fan>-->
+        <!--</div>-->
 
         <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
           <thead>
@@ -114,37 +117,7 @@
           </tbody>
         </table>
 
-        <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
-          <thead>
-            <tr>
-              <th class="mdl-data-table__cell--non-numeric">Fan</th>
-              <th>Manual</th>
-              <th>Current State</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Light 1</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch></mdl-switch></td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Light 2</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Light 3</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Light 4</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
-            </tr>
-          </tbody>
-        </table>
+
       </div>
 
       <ul>

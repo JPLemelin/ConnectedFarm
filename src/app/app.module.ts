@@ -6,9 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule, AuthProviders, AuthMethods  } from 'angularfire2';
 import { MdlModule } from 'angular2-mdl';
 
-import { AppComponent, MapToListOfValue } from './app.component';
-import { FanComponent } from './device.component'
-
+import { AppComponent } from './app.component';
+import { FanComponent, FanComponents } from './device.component'
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCFQrOJFNk_GLqClFLoaSpTYOylrUqY0Ec",
@@ -27,8 +26,7 @@ const firebaseAuthConfig = {
   declarations: [
     AppComponent,
     FanComponent,
-    // FansComponent,
-    MapToListOfValue,
+    FanComponents,
   ],
   imports: [
     BrowserModule,

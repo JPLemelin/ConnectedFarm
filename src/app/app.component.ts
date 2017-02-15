@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
-import { Pipe, PipeTransform } from '@angular/core';
-import { Fan, createDevice, DeviceOutput } from './device'
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
+
+import { Fan } from './device'
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,10 @@ export class AppComponent {
   devices_current_status: FirebaseListObservable<any[]>;
   devices_history: FirebaseListObservable<any[]>;
   settings: FirebaseListObservable<any[]>;
-  settings_devices_fans: FirebaseListObservable<any[]>;
 
+  // trending_up trending_down trending_flat
 
-  fans:{[id: string] : Fan;} = {};
+  fans: Fan[];
 
 
   constructor(public af: AngularFire) {
@@ -29,12 +30,10 @@ export class AppComponent {
     this.settings = af.database.list('/settings');
 
     this.af.database.list('/settings/devices/fans').subscribe(fans => {
+      this.fans = [];
       fans.forEach(fan => {
-
-        console.log(fan);
-        this.fans[fan.$key] = new Fan(af, fan.name, fan.device_type, fan.device_id);
-
-      })
+        this.fans.push(new Fan(af, fan.name, fan.device_type, fan.device_id));
+      });
 
       console.log(this.fans);
     });
@@ -68,10 +67,3 @@ export class AppComponent {
   title = 'Connected Farm Dashboard';
 }
 
-
-@Pipe({ name: 'mapToListOfValue', pure: false})
-export class MapToListOfValue implements PipeTransform {
-  transform(obj: {}) {
-    return Object.keys(obj).map(key => obj[key])
-  }
-}
