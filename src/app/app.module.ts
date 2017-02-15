@@ -3,9 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AppComponent } from './app.component';
 import { AngularFireModule, AuthProviders, AuthMethods  } from 'angularfire2';
 import { MdlModule } from 'angular2-mdl';
+
+import { AppComponent, MapToListOfValue } from './app.component';
+import { FanComponent } from './device.component'
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyCFQrOJFNk_GLqClFLoaSpTYOylrUqY0Ec",
@@ -22,7 +25,10 @@ const firebaseAuthConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FanComponent,
+    // FansComponent,
+    MapToListOfValue,
   ],
   imports: [
     BrowserModule,

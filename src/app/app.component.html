@@ -78,6 +78,11 @@
           </mdl-card-supporting-text>
         </mdl-card>
 
+
+        <div *ngFor="let fan of fans | mapToListOfValue">
+           <fan [fan]="fan"></fan>
+        </div>
+
         <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
           <thead>
             <tr>
