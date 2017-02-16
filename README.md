@@ -7,6 +7,7 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 ## Build & deploy to Firebase
 
+* Run `ng build -prod` to build
 * Run `firebase-bolt database.rules.bolt` to compile rule, generate database.rules.json
 * Run `firebase deploy` to deploy
 
