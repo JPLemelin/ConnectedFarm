@@ -1,6 +1,85 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": false
+    ".write": "auth != null",
+    "current": {
+      "relays": {
+        "$relay_id": {
+          ".validate": "newData.hasChildren(['mode', 'value']) && (newData.child('mode').val() == 'auto' || newData.child('mode').val() == true || newData.child('mode').val() == false)",
+          "mode": {
+            ".validate": "newData.isString() || newData.isBoolean()"
+          },
+          "value": {
+            ".validate": "newData.isBoolean()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      },
+      "dimmers_out": {
+        "$dimmer_id": {
+          ".validate": "newData.hasChildren(['mode', 'value']) && (newData.child('mode').val() == 'auto' || newData.child('mode').isNumber())",
+          "mode": {
+            ".validate": "newData.isString() || newData.isNumber()"
+          },
+          "value": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      },
+      "temp_sensors": {
+        "$temp_id": {
+          ".validate": "newData.hasChildren(['value'])",
+          "value": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "settings": {
+      "devices": {
+        "fans": {
+          "$fan_id": {
+            ".validate": "newData.hasChildren(['name', 'device_id', 'device_type']) && (newData.child('device_type').val() == 'relays' || newData.child('device_type').val() == 'dimmers_out')",
+            "name": {
+              ".validate": "newData.isString()"
+            },
+            "device_id": {
+              ".validate": "newData.isString()"
+            },
+            "device_type": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          }
+        },
+        "lights": {
+          "$light_id": {
+            ".validate": "newData.hasChildren(['name', 'device_id', 'device_type']) && (newData.child('device_type').val() == 'relays' || newData.child('device_type').val() == 'dimmers_out')",
+            "name": {
+              ".validate": "newData.isString()"
+            },
+            "device_id": {
+              ".validate": "newData.isString()"
+            },
+            "device_type": {
+              ".validate": "newData.isString()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          }
+        }
+      }
+    }
   }
 }

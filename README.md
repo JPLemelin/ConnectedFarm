@@ -7,7 +7,8 @@ This project was generated with [angular-cli](https://github.com/angular/angular
 
 ## Build & deploy to Firebase
 
-Run `ng build -pro` to build and `firebase deploy` to deploy
+* Run `firebase-bolt database.rules.bolt` to compile rule, generate database.rules.json
+* Run `firebase deploy` to deploy
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

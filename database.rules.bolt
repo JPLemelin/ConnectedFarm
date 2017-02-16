@@ -1,0 +1,49 @@
+path / {
+  read() { auth != null }
+  write() { auth != null }
+}
+
+path /current/relays/{relay_id} is DeviceRelay {
+}
+
+path /current/dimmers_out/{dimmer_id} is DeviceDimmerOut {
+}
+
+path /current/temp_sensors/{temp_id} is DeviceTempSensor {
+}
+
+type DeviceRelay {
+  mode: String | Boolean,
+  value: Boolean
+
+  validate() { this.mode == "auto" || this.mode == true || this.mode == false }
+}
+
+type DeviceDimmerOut {
+  mode: String | Number,
+  value: Number
+
+  validate() { this.mode == "auto" || this.mode.isNumber()}
+}
+
+type DeviceTempSensor {
+  value: Number
+}
+
+path /settings/devices/fans/{fan_id} is ComponentDeviceOutput {
+}
+
+path /settings/devices/lights/{light_id} is ComponentDeviceOutput {
+}
+
+type ComponentDeviceOutput {
+  name: String,
+  device_id: String,
+  device_type: String,
+
+  validate() { this.device_type == "relays" || this.device_type == "dimmers_out"  }
+}
+
+
+
+
