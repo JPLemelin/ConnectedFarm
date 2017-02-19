@@ -1,40 +1,48 @@
 import { Component, Input } from '@angular/core';
 
-import { Fan } from './device';
+import { Device } from './device';
 
 @Component({
-  selector: '[tr-fan]',
+  selector: '[tr-device]',
   template: `
+    <!-- Name -->
     <td class="mdl-data-table__cell--non-numeric">
-      {{fan.name}}
+      {{device.name}}
     </td>
     <!-- Auto -->
     <td class="mdl-data-table__cell--non-numeric">
-      <mdl-switch [ngModel]="fan.isAutoMode"  (ngModelChange)="fan.setMode($event)"></mdl-switch>
+      <mdl-switch [ngModel]="device.mode"  (ngModelChange)="device.mode = $event"></mdl-switch>
     </td>
+    
+    <!-- Current Value / Manual Value -->
     <td class="mdl-data-table__cell--non-numeric">
       <!-- RELAY Current Value-->
-      <mdl-switch *ngIf="fan.getDeviceType() == fan.deviceType.RELAY"  [ngModel]="fan.value" [disabled]="fan.isAutoMode" (ngModelChange)="fan.setValue($event)"></mdl-switch>
+      <mdl-switch *ngIf="device.getDeviceType() == device.deviceType.RELAY"  [ngModel]="device.value" [disabled]="device.mode" (ngModelChange)="device.value = $event"></mdl-switch>
 
       <!-- DIMMER_OUT Current Value-->
-      <mdl-slider *ngIf="fan.getDeviceType() == fan.deviceType.DIMMER_OUT" [min]="0" [max]="100" [step]="1" [ngModel]="fan.value" [disabled]="fan.isAutoMode" (ngModelChange)="fan.setValue($event)"></mdl-slider>
+      <div *ngIf="device.getDeviceType() == device.deviceType.DIMMER_OUT">
+        <div style="width: 300px;">
+          <mdl-slider [min]="0" [max]="100" [step]="1" [ngModel]="device.value" [disabled]="device.mode" (ngModelChange)="device.value = $event"></mdl-slider>
+        </div>
+        <div>{{device.value}}</div>
+      </div>
     </td>
   `
 })
-export class FanComponent {
-  _fan: Fan;
+export class DeviceComponent {
+  _device: Device;
 
-  @Input() set fan(val: Fan){
-    this._fan = val;
+  @Input() set device(val: Device){
+    this._device = val;
   }
 
-  get fan(): Fan {
-    return this._fan;
+  get device(): Device {
+    return this._device;
   }
 }
 
 @Component({
-  selector: '[table-fans]',
+  selector: '[table-devices]',
   template: `
        <thead>
         <tr>
@@ -44,20 +52,20 @@ export class FanComponent {
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let fan of fans" tr-fan [fan]="fan"></tr>
+        <tr *ngFor="let device of devices" tr-device [device]="device"></tr>
       </tbody>
   `
 })
 
-export class FanComponents {
-  _fans: Fan[];
+export class DeviceComponents {
+  _devices: Device[];
 
-  @Input() set fans(val: Fan[]){
-    this._fans = val;
+  @Input() set devices(val: Device[]){
+    this._devices = val;
   }
 
-  get fans(): Fan[] {
-    return this._fans;
+  get devices(): Device[] {
+    return this._devices;
   }
 
   @Input() deviceCategory: string

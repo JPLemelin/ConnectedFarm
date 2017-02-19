@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 
-import { Fan } from './device'
+import { Device } from './device'
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,8 @@ export class AppComponent {
 
   // trending_up trending_down trending_flat
 
-  fans: Fan[];
+  fans: Device[];
+  lights: Device[];
 
 
   constructor(public af: AngularFire) {
@@ -29,14 +30,26 @@ export class AppComponent {
     this.devices_history = af.database.list('/history');
     this.settings = af.database.list('/settings');
 
-    this.af.database.list('/settings/devices/fans').subscribe(fans => {
+    // Fans
+    this.af.database.list('/settings/devices/fans').subscribe(devices => {
       this.fans = [];
-      fans.forEach(fan => {
-        this.fans.push(new Fan(af, fan.name, fan.device_type, fan.device_id));
+      devices.forEach(device => {
+        this.fans.push(new Device(af, device.name, device.device_type, device.device_id));
       });
 
       console.log(this.fans);
     });
+
+    // Lights
+    this.af.database.list('/settings/devices/lights').subscribe(devices => {
+      this.lights = [];
+      devices.forEach(device => {
+        this.lights.push(new Device(af, device.name, device.device_type, device.device_id));
+      });
+
+      console.log(this.lights);
+    });
+
 
 
     this.af.auth.subscribe(user => {
