@@ -21,8 +21,8 @@ export class AppComponent {
 
   // trending_up trending_down trending_flat
 
-  fans: Device[];
-  lights: Device[];
+  fans: Device<any>[];
+  lights: Device<any>[];
 
 
   constructor(public af: AngularFire) {

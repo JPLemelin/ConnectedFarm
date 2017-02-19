@@ -30,13 +30,13 @@ import { Device } from './device';
   `
 })
 export class DeviceComponent {
-  _device: Device;
+  _device: Device<any>;
 
-  @Input() set device(val: Device){
+  @Input() set device(val: Device<any>){
     this._device = val;
   }
 
-  get device(): Device {
+  get device(): Device<any> {
     return this._device;
   }
 }
@@ -58,13 +58,13 @@ export class DeviceComponent {
 })
 
 export class DeviceComponents {
-  _devices: Device[];
+  _devices: Device<any>[];
 
-  @Input() set devices(val: Device[]){
+  @Input() set devices(val: Device<any>[]){
     this._devices = val;
   }
 
-  get devices(): Device[] {
+  get devices(): Device<any>[] {
     return this._devices;
   }
 

@@ -33,15 +33,15 @@ export enum DeviceType {
   TEMPERATURE,
 }
 
-export class Device {
+export class Device<T> {
 
   // Export enum
   deviceType = DeviceType;
 
   private _deviceType: DeviceType;
   private _isAutoMode: boolean;
-  private _manualValue: boolean | number;
-  private _autoValue: boolean | number;
+  private _manualValue: T;
+  private _autoValue: T;
 
   private _fbIsAutoMode: FirebaseObjectObservable<any>;
   private _fbValue: FirebaseObjectObservable<any>;
@@ -85,12 +85,12 @@ export class Device {
     return this._isAutoMode;
   }
 
-  set value(value: boolean | number) {
+  set value(value: T) {
     this._manualValue = value;
     this._fbManualValue.set(value);
   }
 
-  get value(): boolean | number {
+  get value(): T {
     if (this._isAutoMode) {
       return this._autoValue;
     } else {
