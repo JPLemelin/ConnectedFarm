@@ -1,5 +1,6 @@
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
+
 // interface Device {
 //   value: number;
 // }
@@ -25,34 +26,6 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 //   value: number;
 // }
 //
-// export function createDevice(af: AngularFire, devices_ref: string, device_type: string, device_id: string): DeviceOutput
-// {
-//   var newDevice;
-//   var deviceRef = af.database.object(devices_ref + '/' + device_type + '/' + device_id).$ref;
-//   if (device_type == 'relays') {
-//     newDevice = new DeviceRelay();
-//
-//     newDevice.mode = deviceRef.child('mode');
-//     newDevice.value = deviceRef.child('value');
-//   }
-//   else if (device_type == 'dimmers_out') {
-//
-//   }
-//
-//   return newDevice;
-// }
-
-
-// export class Fan {
-//
-//   name: string;
-//   device: DeviceOutput;
-//
-//   constructor(name: string, device: DeviceOutput) {
-//     this.name = name
-//     this.device = device
-//   }
-// }
 
 export enum DeviceType {
   RELAY,
@@ -60,20 +33,25 @@ export enum DeviceType {
   TEMPERATURE,
 }
 
-export class Fan {
+export class Device<T> {
 
+  // Export enum
   deviceType = DeviceType;
 
-  isAutoMode: boolean;
-  _value: boolean | number;
-
   private _deviceType: DeviceType;
-  private _mode: FirebaseObjectObservable<any>;
-  private _fb_value: FirebaseObjectObservable<any>;
+  private _isAutoMode: boolean;
+  private _manualValue: T;
+  private _autoValue: T;
+
+  private _fbIsAutoMode: FirebaseObjectObservable<any>;
+  private _fbValue: FirebaseObjectObservable<any>;
+  private _fbManualValue: FirebaseObjectObservable<any>;
+
 
   constructor(af: AngularFire, public name: string, device_type: string, device_id: string){
-    this._mode = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'mode');
-    this._fb_value = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'value');
+    this._fbIsAutoMode = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'is_auto_mode');
+    this._fbValue = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'value');
+    this._fbManualValue = af.database.object('/current' + '/' + device_type + '/' + device_id + '/' + 'manual_value');
 
     // TODO: Refactor
     if (device_type == "relays") {
@@ -86,54 +64,43 @@ export class Fan {
       throw new TypeError("Unknown type: " + device_type);
     }
 
-
-    this._mode.subscribe(snapshot => {
-      this.isAutoMode = snapshot.$value == "auto"
+    this._fbIsAutoMode.subscribe(snapshot => {
+      this._isAutoMode = snapshot.$value;
     });
 
-    this._fb_value.subscribe(snapshot => {
-      this._value = snapshot.$value
+    this._fbValue.subscribe(snapshot => {
+      this._autoValue = snapshot.$value;
+    });
+
+    this._fbManualValue.subscribe(snapshot => {
+      this._manualValue = snapshot.$value;
     });
   }
 
-
-  // TODO: use get set with ([ngModel]) http://stackoverflow.com/questions/12827266/get-and-set-in-typescript
-  setMode(is_auto: boolean) {
-    if (is_auto) {
-      this._mode.set("auto");
-    }
-    else {
-      this._mode.set(this.value);
-    }
+  set mode(value: boolean) {
+    this._fbIsAutoMode.set(value);
   }
 
-  setValue(value: boolean | number) {
-    if (this.isAutoMode == false) {
-      this._mode.set(value);
-    }
-    else {
-      // Should not happened!
-    }
+  get mode():boolean {
+    return this._isAutoMode;
   }
 
-  set value(value: boolean | number) {
-    console.log(this);
-    if (this.isAutoMode == false) {
-      this._mode.set(value);
-    }
-    else {
-      // Should not happened!
-    }
-  }
-  get value(): boolean | number {
-    return this._value;
+  set value(value: T) {
+    this._manualValue = value;
+    this._fbManualValue.set(value);
   }
 
+  get value(): T {
+    if (this._isAutoMode) {
+      return this._autoValue;
+    } else {
+      return this._manualValue;
+    }
+  }
 
   getDeviceType(): DeviceType {
     return this._deviceType;
   }
-
 
 }
 

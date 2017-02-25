@@ -13,17 +13,15 @@ path /current/temp_sensors/{temp_id} is DeviceTempSensor {
 }
 
 type DeviceRelay {
-  mode: String | Boolean,
-  value: Boolean
-
-  validate() { this.mode == "auto" || this.mode == true || this.mode == false }
+  is_auto_mode: Boolean,
+  value: Boolean,
+  manual_value: Boolean,
 }
 
 type DeviceDimmerOut {
-  mode: String | Number,
-  value: Number
-
-  validate() { this.mode == "auto" || this.mode.isNumber()}
+  is_auto_mode: Boolean,
+  value: Number,
+  manual_value: Number,
 }
 
 type DeviceTempSensor {

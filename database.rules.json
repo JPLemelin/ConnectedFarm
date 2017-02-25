@@ -5,11 +5,14 @@
     "current": {
       "relays": {
         "$relay_id": {
-          ".validate": "newData.hasChildren(['mode', 'value']) && (newData.child('mode').val() == 'auto' || newData.child('mode').val() == true || newData.child('mode').val() == false)",
-          "mode": {
-            ".validate": "newData.isString() || newData.isBoolean()"
+          ".validate": "newData.hasChildren(['is_auto_mode', 'value', 'manual_value'])",
+          "is_auto_mode": {
+            ".validate": "newData.isBoolean()"
           },
           "value": {
+            ".validate": "newData.isBoolean()"
+          },
+          "manual_value": {
             ".validate": "newData.isBoolean()"
           },
           "$other": {
@@ -19,11 +22,14 @@
       },
       "dimmers_out": {
         "$dimmer_id": {
-          ".validate": "newData.hasChildren(['mode', 'value']) && (newData.child('mode').val() == 'auto' || newData.child('mode').isNumber())",
-          "mode": {
-            ".validate": "newData.isString() || newData.isNumber()"
+          ".validate": "newData.hasChildren(['is_auto_mode', 'value', 'manual_value'])",
+          "is_auto_mode": {
+            ".validate": "newData.isBoolean()"
           },
           "value": {
+            ".validate": "newData.isNumber()"
+          },
+          "manual_value": {
             ".validate": "newData.isNumber()"
           },
           "$other": {

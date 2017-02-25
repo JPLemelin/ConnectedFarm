@@ -78,63 +78,17 @@
           </mdl-card-supporting-text>
         </mdl-card>
 
-
-        <table table-fans [fans]="fans" [deviceCategory]="'Fan'" class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp" >
+        <!-- Fans -->
+        <table table-devices [devices]="fans" [deviceCategory]="'Fans'"
+               class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp" >
         </table>
 
-        <!--<div *ngFor="let fan of fans | mapToListOfValue">-->
-           <!--<fan [fan]="fan"></fan>-->
-        <!--</div>-->
-
-        <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
-          <thead>
-            <tr>
-              <th class="mdl-data-table__cell--non-numeric">Fan</th>
-              <th>Manual</th>
-              <th>Current State</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Fan 1</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch></mdl-switch></td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Fan 2</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-switch disabled="true"></mdl-switch></td>
-            </tr>
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">Fan Variable</td>
-              <td class="mdl-data-table__cell--non-numeric"><mdl-checkbox [(ngModel)]="fan_3_auto"></mdl-checkbox></td>
-              <td class="mdl-data-table__cell--non-numeric">
-                <div style="width: 300px">
-                  <mdl-slider min="0" max="50" value="30" step="5" disabled=[fan_3_auto]></mdl-slider>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+        <!-- Lights -->
+        <table table-devices [devices]="lights" [deviceCategory]="'Lights'"
+               class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp" >
         </table>
-
 
       </div>
-
-      <ul>
-        <li class="text" *ngFor="let dcs of devices_current_status | async">
-          {{dcs.$key}}
-          {{dcs.$value}}
-        </li>
-      </ul>
-      <br/>
-      <h2>Settings:</h2>
-      <ul>
-        <li class="text" *ngFor="let setting of settings | async">
-          {{setting.$key}}: {{setting.$value}}
-        </li>
-      </ul>
-
-
 
     </mdl-layout-content>
   </mdl-layout>
