@@ -16,5 +16,15 @@ exports.onDeviceUpdate = functions.database.ref('/current/{deviceType}/{deviceId
   const deviceId = event.params.deviceId;
   const value = event.data.val();
 
+  // Use: event.data.ref.parent.child('lastmodified').set(event.timestamp); ?
   admin.database().ref('/current/' + deviceType + '/' + deviceId + '/lastmodified').set(event.timestamp);
+
+  // Add it to the history
+  // https://firebase.googleblog.com/2015/02/the-2120-ways-to-ensure-unique_68.html
+  var historyRef = admin.database().ref('/history/' + deviceType + '/' + deviceId ).push();
+  historyRef.set({
+    'value': value,
+    'timestamp': event.timestamp,
+  });
+
 });
