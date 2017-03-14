@@ -12,7 +12,7 @@ before_script:
   - npm install -g firebase-tools
   - npm install -g angular-cli
   - npm install -g firebase-bolt
-  - cd $TRAVIS_BUILD_DIR/functions && npm install 
+  - pushd $TRAVIS_BUILD_DIR/functions && npm install && popd
 
 script:
   - ng build --prod
